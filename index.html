@@ -23,15 +23,66 @@
             margin-bottom: 10px;
         }
 
-        .recherche {
-            display: flex;
-            justify-content: center;
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .formulaire {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
             margin-bottom: 30px;
         }
 
+        .formulaire h2 {
+            margin-top: 0;
+        }
+
+        .champ {
+            margin-bottom: 15px;
+        }
+
+        .champ label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .champ input,
+        .champ select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .bouton {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .bouton:hover {
+            background: #444;
+        }
+
+        .recherche {
+            margin-bottom: 20px;
+        }
+
         .recherche input {
-            width: 90%;
-            max-width: 500px;
+            width: 100%;
+            box-sizing: border-box;
             padding: 12px;
             font-size: 16px;
             border: 1px solid #ccc;
@@ -42,8 +93,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            max-width: 1200px;
-            margin: auto;
         }
 
         .carte {
@@ -58,7 +107,7 @@
             border-radius: 8px;
         }
 
-        .carte h2 {
+        .carte h3 {
             margin-bottom: 8px;
         }
 
@@ -71,54 +120,185 @@
             font-weight: bold;
             margin-top: 10px;
         }
+
+        .message {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+        }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>🃏 Mon Pokédex Pokémon</h1>
-        <p>Bienvenue dans mon catalogue de cartes Pokémon.</p>
-    </header>
+    <div class="container">
 
-    <div class="recherche">
-        <input 
-            type="text" 
-            id="recherche" 
-            placeholder="🔎 Rechercher une carte..."
-            onkeyup="chercherCarte()"
-        >
-    </div>
+        <header>
+            <h1>🃏 Mon Pokédex Pokémon</h1>
+            <p>Bienvenue dans mon catalogue de cartes Pokémon.</p>
+        </header>
 
-    <div class="cartes" id="cartes">
+        <!-- FORMULAIRE AJOUTER UNE CARTE -->
 
-        <div class="carte">
-            <img src="https://images.pokemontcg.io/base1/4.png" alt="Dracaufeu">
-            <h2>Dracaufeu</h2>
-            <p class="info">🌍 Langue : Français</p>
-            <p class="info">⭐ État : Excellent</p>
-            <p class="prix">💰 250 CHF</p>
+        <div class="formulaire">
+
+            <h2>➕ Ajouter une carte</h2>
+
+            <div class="champ">
+                <label for="nom">Nom de la carte</label>
+                <input type="text" id="nom" placeholder="Exemple : Dracaufeu">
+            </div>
+
+            <div class="champ">
+                <label for="numero">Numéro de carte</label>
+                <input type="text" id="numero" placeholder="Exemple : 004/102">
+            </div>
+
+            <div class="champ">
+                <label for="langue">Langue</label>
+                <select id="langue">
+                    <option value="Français">Français</option>
+                    <option value="Anglais">Anglais</option>
+                    <option value="Japonais">Japonais</option>
+                    <option value="Allemand">Allemand</option>
+                    <option value="Espagnol">Espagnol</option>
+                    <option value="Italien">Italien</option>
+                </select>
+            </div>
+
+            <div class="champ">
+                <label for="etat">État</label>
+                <select id="etat">
+                    <option value="Neuf">Neuf</option>
+                    <option value="Excellent">Excellent</option>
+                    <option value="Très bon">Très bon</option>
+                    <option value="Bon">Bon</option>
+                    <option value="Joué">Joué</option>
+                </select>
+            </div>
+
+            <div class="champ">
+                <label for="quantite">Quantité</label>
+                <input type="number" id="quantite" value="1" min="1">
+            </div>
+
+            <div class="champ">
+                <label for="prix">Prix (CHF)</label>
+                <input type="number" id="prix" placeholder="Exemple : 25" min="0" step="0.01">
+            </div>
+
+            <div class="champ">
+                <label for="image">URL de l'image</label>
+                <input type="text" id="image" placeholder="https://...">
+            </div>
+
+            <button class="bouton" onclick="ajouterCarte()">
+                Ajouter la carte
+            </button>
+
+            <div id="message" class="message"></div>
+
         </div>
 
-        <div class="carte">
-            <img src="https://images.pokemontcg.io/base1/58.png" alt="Pikachu">
-            <h2>Pikachu</h2>
-            <p class="info">🌍 Langue : Français</p>
-            <p class="info">⭐ État : Très bon</p>
-            <p class="prix">💰 25 CHF</p>
+        <!-- RECHERCHE -->
+
+        <div class="recherche">
+            <input
+                type="text"
+                id="recherche"
+                placeholder="🔎 Rechercher une carte..."
+                onkeyup="chercherCarte()"
+            >
         </div>
 
-        <div class="carte">
-            <img src="https://images.pokemontcg.io/base1/10.png" alt="Mewtwo">
-            <h2>Mewtwo</h2>
-            <p class="info">🌍 Langue : Français</p>
-            <p class="info">⭐ État : Bon</p>
-            <p class="prix">💰 80 CHF</p>
+        <!-- CARTES -->
+
+        <div class="cartes" id="cartes">
+
+            <div class="carte">
+                <img src="https://images.pokemontcg.io/base1/4.png" alt="Dracaufeu">
+                <h3>Dracaufeu</h3>
+                <p class="info">🔢 Numéro : 004/102</p>
+                <p class="info">🌍 Langue : Français</p>
+                <p class="info">⭐ État : Excellent</p>
+                <p class="info">📦 Quantité : 1</p>
+                <p class="prix">💰 250 CHF</p>
+            </div>
+
+            <div class="carte">
+                <img src="https://images.pokemontcg.io/base1/58.png" alt="Pikachu">
+                <h3>Pikachu</h3>
+                <p class="info">🔢 Numéro : 058/102</p>
+                <p class="info">🌍 Langue : Français</p>
+                <p class="info">⭐ État : Très bon</p>
+                <p class="info">📦 Quantité : 1</p>
+                <p class="prix">💰 25 CHF</p>
+            </div>
+
+            <div class="carte">
+                <img src="https://images.pokemontcg.io/base1/10.png" alt="Mewtwo">
+                <h3>Mewtwo</h3>
+                <p class="info">🔢 Numéro : 010/102</p>
+                <p class="info">🌍 Langue : Français</p>
+                <p class="info">⭐ État : Bon</p>
+                <p class="info">📦 Quantité : 1</p>
+                <p class="prix">💰 80 CHF</p>
+            </div>
+
         </div>
 
     </div>
 
     <script>
+
+        function ajouterCarte() {
+
+            const nom = document.getElementById("nom").value.trim();
+            const numero = document.getElementById("numero").value.trim();
+            const langue = document.getElementById("langue").value;
+            const etat = document.getElementById("etat").value;
+            const quantite = document.getElementById("quantite").value;
+            const prix = document.getElementById("prix").value;
+            const image = document.getElementById("image").value.trim();
+
+            const message = document.getElementById("message");
+
+            if (nom === "") {
+                message.textContent = "⚠️ Indique le nom de la carte.";
+                return;
+            }
+
+            if (image === "") {
+                message.textContent = "⚠️ Ajoute l'URL d'une image.";
+                return;
+            }
+
+            const nouvelleCarte = document.createElement("div");
+
+            nouvelleCarte.className = "carte";
+
+            nouvelleCarte.innerHTML = `
+                <img src="${image}" alt="${nom}">
+                <h3>${nom}</h3>
+                <p class="info">🔢 Numéro : ${numero || "Non renseigné"}</p>
+                <p class="info">🌍 Langue : ${langue}</p>
+                <p class="info">⭐ État : ${etat}</p>
+                <p class="info">📦 Quantité : ${quantite}</p>
+                <p class="prix">💰 ${prix ? prix + " CHF" : "Prix non renseigné"}</p>
+            `;
+
+            document.getElementById("cartes").appendChild(nouvelleCarte);
+
+            message.textContent = "✅ Carte ajoutée au Pokédex !";
+
+            document.getElementById("nom").value = "";
+            document.getElementById("numero").value = "";
+            document.getElementById("quantite").value = "1";
+            document.getElementById("prix").value = "";
+            document.getElementById("image").value = "";
+        }
+
+
         function chercherCarte() {
 
             const recherche = document
@@ -130,12 +310,9 @@
 
             cartes.forEach(function(carte) {
 
-                const nom = carte
-                    .querySelector("h2")
-                    .textContent
-                    .toLowerCase();
+                const texte = carte.textContent.toLowerCase();
 
-                if (nom.includes(recherche)) {
+                if (texte.includes(recherche)) {
                     carte.style.display = "block";
                 } else {
                     carte.style.display = "none";
@@ -143,6 +320,7 @@
 
             });
         }
+
     </script>
 
 </body>
