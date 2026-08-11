@@ -56,6 +56,14 @@
             font-size: 16px;
         }
 
+        .photo-preview {
+            width: 180px;
+            max-width: 100%;
+            display: none;
+            margin: 15px auto;
+            border-radius: 10px;
+        }
+
         .bouton {
             width: 100%;
             padding: 13px;
@@ -117,12 +125,6 @@
             margin-top: 10px;
         }
 
-        .message {
-            text-align: center;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
         .supprimer {
             margin-top: 10px;
             width: 100%;
@@ -132,6 +134,12 @@
             background: #d32f2f;
             color: white;
             cursor: pointer;
+        }
+
+        .message {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -168,7 +176,7 @@
                 <option value="Allemand">Allemand</option>
                 <option value="Espagnol">Espagnol</option>
                 <option value="Italien">Italien</option>
-            </select>
+        </select>
         </div>
 
         <div class="champ">
@@ -193,9 +201,17 @@
         </div>
 
         <div class="champ">
-            <label for="image">URL de l'image</label>
-            <input type="text" id="image" placeholder="https://...">
+            <label for="photo">📷 Photo de la carte</label>
+            <input
+                type="file"
+                id="photo"
+                accept="image/*"
+                capture="environment"
+                onchange="previsualiserPhoto()"
+            >
         </div>
+
+        <img id="photoPreview" class="photo-preview" alt="Aperçu de la carte">
 
         <button class="bouton" onclick="ajouterCarte()">
             Ajouter la carte
@@ -220,15 +236,44 @@
 
 <script>
 
-    /*
-     * Les cartes sont sauvegardées dans le navigateur.
-     */
-
     let cartes = JSON.parse(localStorage.getItem("monPokedex")) || [];
 
 
+    let photoSelectionnee = "";
+
+
     function sauvegarderCartes() {
-        localStorage.setItem("monPokedex", JSON.stringify(cartes));
+
+        localStorage.setItem(
+            "monPokedex",
+            JSON.stringify(cartes)
+        );
+
+    }
+
+
+    function previsualiserPhoto() {
+
+        const fichier = document.getElementById("photo").files[0];
+
+        if (!fichier) {
+            return;
+        }
+
+        const lecteur = new FileReader();
+
+        lecteur.onload = function(e) {
+
+            photoSelectionnee = e.target.result;
+
+            const preview = document.getElementById("photoPreview");
+
+            preview.src = photoSelectionnee;
+            preview.style.display = "block";
+
+        };
+
+        lecteur.readAsDataURL(fichier);
     }
 
 
@@ -246,6 +291,7 @@
 
             nouvelleCarte.innerHTML = `
                 <img src="${carte.image}" alt="${carte.nom}">
+
                 <h3>${carte.nom}</h3>
 
                 <p class="info">
@@ -265,64 +311,116 @@
                 </p>
 
                 <p class="prix">
-                    💰 ${carte.prix ? carte.prix + " CHF" : "Prix non renseigné"}
+                    💰 ${carte.prix
+                        ? carte.prix + " CHF"
+                        : "Prix non renseigné"}
                 </p>
 
-                <button class="supprimer" onclick="supprimerCarte(${index})">
+                <button
+                    class="supprimer"
+                    onclick="supprimerCarte(${index})">
                     🗑️ Supprimer
                 </button>
             `;
 
             zoneCartes.appendChild(nouvelleCarte);
+
         });
+
     }
 
 
     function ajouterCarte() {
 
-        const nom = document.getElementById("nom").value.trim();
-        const numero = document.getElementById("numero").value.trim();
-        const langue = document.getElementById("langue").value;
-        const etat = document.getElementById("etat").value;
-        const quantite = document.getElementById("quantite").value;
-        const prix = document.getElementById("prix").value;
-        const image = document.getElementById("image").value.trim();
+        const nom =
+            document.getElementById("nom").value.trim();
 
-        const message = document.getElementById("message");
+        const numero =
+            document.getElementById("numero").value.trim();
+
+        const langue =
+            document.getElementById("langue").value;
+
+        const etat =
+            document.getElementById("etat").value;
+
+        const quantite =
+            document.getElementById("quantite").value;
+
+        const prix =
+            document.getElementById("prix").value;
+
+        const message =
+            document.getElementById("message");
+
 
         if (nom === "") {
-            message.textContent = "⚠️ Indique le nom de la carte.";
+
+            message.textContent =
+                "⚠️ Indique le nom de la carte.";
+
             return;
         }
 
-        if (image === "") {
-            message.textContent = "⚠️ Ajoute l'URL d'une image.";
+
+        if (photoSelectionnee === "") {
+
+            message.textContent =
+                "⚠️ Ajoute une photo de la carte.";
+
             return;
         }
+
 
         const nouvelleCarte = {
+
             nom: nom,
+
             numero: numero,
+
             langue: langue,
+
             etat: etat,
+
             quantite: quantite,
+
             prix: prix,
-            image: image
+
+            image: photoSelectionnee
+
         };
+
 
         cartes.push(nouvelleCarte);
 
+
         sauvegarderCartes();
+
 
         afficherCartes();
 
-        message.textContent = "✅ Carte enregistrée !";
+
+        message.textContent =
+            "✅ Carte enregistrée !";
+
 
         document.getElementById("nom").value = "";
+
         document.getElementById("numero").value = "";
+
         document.getElementById("quantite").value = "1";
+
         document.getElementById("prix").value = "";
-        document.getElementById("image").value = "";
+
+        document.getElementById("photo").value = "";
+
+
+        photoSelectionnee = "";
+
+
+        document.getElementById("photoPreview").style.display =
+            "none";
+
     }
 
 
@@ -333,35 +431,43 @@
         sauvegarderCartes();
 
         afficherCartes();
+
     }
 
 
     function chercherCarte() {
 
-        const recherche = document
-            .getElementById("recherche")
-            .value
-            .toLowerCase();
+        const recherche =
+            document
+                .getElementById("recherche")
+                .value
+                .toLowerCase();
 
-        const cartesAffichees = document.querySelectorAll(".carte");
+
+        const cartesAffichees =
+            document.querySelectorAll(".carte");
+
 
         cartesAffichees.forEach(function(carte) {
 
-            const texte = carte.textContent.toLowerCase();
+            const texte =
+                carte.textContent.toLowerCase();
+
 
             if (texte.includes(recherche)) {
+
                 carte.style.display = "block";
+
             } else {
+
                 carte.style.display = "none";
+
             }
 
         });
+
     }
 
-
-    /*
-     * Affiche les cartes sauvegardées au chargement de la page.
-     */
 
     afficherCartes();
 
