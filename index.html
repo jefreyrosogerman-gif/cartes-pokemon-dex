@@ -19,10 +19,6 @@
             margin-bottom: 30px;
         }
 
-        h1 {
-            margin-bottom: 10px;
-        }
-
         .container {
             max-width: 1200px;
             margin: auto;
@@ -126,202 +122,250 @@
             font-weight: bold;
             margin-top: 15px;
         }
+
+        .supprimer {
+            margin-top: 10px;
+            width: 100%;
+            padding: 9px;
+            border: none;
+            border-radius: 8px;
+            background: #d32f2f;
+            color: white;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <header>
-            <h1>🃏 Mon Pokédex Pokémon</h1>
-            <p>Bienvenue dans mon catalogue de cartes Pokémon.</p>
-        </header>
+    <header>
+        <h1>🃏 Mon Pokédex Pokémon</h1>
+        <p>Bienvenue dans mon catalogue de cartes Pokémon.</p>
+    </header>
 
-        <!-- FORMULAIRE AJOUTER UNE CARTE -->
+    <div class="formulaire">
 
-        <div class="formulaire">
+        <h2>➕ Ajouter une carte</h2>
 
-            <h2>➕ Ajouter une carte</h2>
-
-            <div class="champ">
-                <label for="nom">Nom de la carte</label>
-                <input type="text" id="nom" placeholder="Exemple : Dracaufeu">
-            </div>
-
-            <div class="champ">
-                <label for="numero">Numéro de carte</label>
-                <input type="text" id="numero" placeholder="Exemple : 004/102">
-            </div>
-
-            <div class="champ">
-                <label for="langue">Langue</label>
-                <select id="langue">
-                    <option value="Français">Français</option>
-                    <option value="Anglais">Anglais</option>
-                    <option value="Japonais">Japonais</option>
-                    <option value="Allemand">Allemand</option>
-                    <option value="Espagnol">Espagnol</option>
-                    <option value="Italien">Italien</option>
-                </select>
-            </div>
-
-            <div class="champ">
-                <label for="etat">État</label>
-                <select id="etat">
-                    <option value="Neuf">Neuf</option>
-                    <option value="Excellent">Excellent</option>
-                    <option value="Très bon">Très bon</option>
-                    <option value="Bon">Bon</option>
-                    <option value="Joué">Joué</option>
-                </select>
-            </div>
-
-            <div class="champ">
-                <label for="quantite">Quantité</label>
-                <input type="number" id="quantite" value="1" min="1">
-            </div>
-
-            <div class="champ">
-                <label for="prix">Prix (CHF)</label>
-                <input type="number" id="prix" placeholder="Exemple : 25" min="0" step="0.01">
-            </div>
-
-            <div class="champ">
-                <label for="image">URL de l'image</label>
-                <input type="text" id="image" placeholder="https://...">
-            </div>
-
-            <button class="bouton" onclick="ajouterCarte()">
-                Ajouter la carte
-            </button>
-
-            <div id="message" class="message"></div>
-
+        <div class="champ">
+            <label for="nom">Nom de la carte</label>
+            <input type="text" id="nom" placeholder="Exemple : Dracaufeu">
         </div>
 
-        <!-- RECHERCHE -->
-
-        <div class="recherche">
-            <input
-                type="text"
-                id="recherche"
-                placeholder="🔎 Rechercher une carte..."
-                onkeyup="chercherCarte()"
-            >
+        <div class="champ">
+            <label for="numero">Numéro de carte</label>
+            <input type="text" id="numero" placeholder="Exemple : 004/102">
         </div>
 
-        <!-- CARTES -->
-
-        <div class="cartes" id="cartes">
-
-            <div class="carte">
-                <img src="https://images.pokemontcg.io/base1/4.png" alt="Dracaufeu">
-                <h3>Dracaufeu</h3>
-                <p class="info">🔢 Numéro : 004/102</p>
-                <p class="info">🌍 Langue : Français</p>
-                <p class="info">⭐ État : Excellent</p>
-                <p class="info">📦 Quantité : 1</p>
-                <p class="prix">💰 250 CHF</p>
-            </div>
-
-            <div class="carte">
-                <img src="https://images.pokemontcg.io/base1/58.png" alt="Pikachu">
-                <h3>Pikachu</h3>
-                <p class="info">🔢 Numéro : 058/102</p>
-                <p class="info">🌍 Langue : Français</p>
-                <p class="info">⭐ État : Très bon</p>
-                <p class="info">📦 Quantité : 1</p>
-                <p class="prix">💰 25 CHF</p>
-            </div>
-
-            <div class="carte">
-                <img src="https://images.pokemontcg.io/base1/10.png" alt="Mewtwo">
-                <h3>Mewtwo</h3>
-                <p class="info">🔢 Numéro : 010/102</p>
-                <p class="info">🌍 Langue : Français</p>
-                <p class="info">⭐ État : Bon</p>
-                <p class="info">📦 Quantité : 1</p>
-                <p class="prix">💰 80 CHF</p>
-            </div>
-
+        <div class="champ">
+            <label for="langue">Langue</label>
+            <select id="langue">
+                <option value="Français">Français</option>
+                <option value="Anglais">Anglais</option>
+                <option value="Japonais">Japonais</option>
+                <option value="Allemand">Allemand</option>
+                <option value="Espagnol">Espagnol</option>
+                <option value="Italien">Italien</option>
+            </select>
         </div>
+
+        <div class="champ">
+            <label for="etat">État</label>
+            <select id="etat">
+                <option value="Neuf">Neuf</option>
+                <option value="Excellent">Excellent</option>
+                <option value="Très bon">Très bon</option>
+                <option value="Bon">Bon</option>
+                <option value="Joué">Joué</option>
+            </select>
+        </div>
+
+        <div class="champ">
+            <label for="quantite">Quantité</label>
+            <input type="number" id="quantite" value="1" min="1">
+        </div>
+
+        <div class="champ">
+            <label for="prix">Prix (CHF)</label>
+            <input type="number" id="prix" placeholder="Exemple : 25" min="0" step="0.01">
+        </div>
+
+        <div class="champ">
+            <label for="image">URL de l'image</label>
+            <input type="text" id="image" placeholder="https://...">
+        </div>
+
+        <button class="bouton" onclick="ajouterCarte()">
+            Ajouter la carte
+        </button>
+
+        <div id="message" class="message"></div>
 
     </div>
 
-    <script>
+    <div class="recherche">
+        <input
+            type="text"
+            id="recherche"
+            placeholder="🔎 Rechercher une carte..."
+            onkeyup="chercherCarte()"
+        >
+    </div>
 
-        function ajouterCarte() {
+    <div class="cartes" id="cartes"></div>
 
-            const nom = document.getElementById("nom").value.trim();
-            const numero = document.getElementById("numero").value.trim();
-            const langue = document.getElementById("langue").value;
-            const etat = document.getElementById("etat").value;
-            const quantite = document.getElementById("quantite").value;
-            const prix = document.getElementById("prix").value;
-            const image = document.getElementById("image").value.trim();
+</div>
 
-            const message = document.getElementById("message");
+<script>
 
-            if (nom === "") {
-                message.textContent = "⚠️ Indique le nom de la carte.";
-                return;
-            }
+    /*
+     * Les cartes sont sauvegardées dans le navigateur.
+     */
 
-            if (image === "") {
-                message.textContent = "⚠️ Ajoute l'URL d'une image.";
-                return;
-            }
+    let cartes = JSON.parse(localStorage.getItem("monPokedex")) || [];
+
+
+    function sauvegarderCartes() {
+        localStorage.setItem("monPokedex", JSON.stringify(cartes));
+    }
+
+
+    function afficherCartes() {
+
+        const zoneCartes = document.getElementById("cartes");
+
+        zoneCartes.innerHTML = "";
+
+        cartes.forEach(function(carte, index) {
 
             const nouvelleCarte = document.createElement("div");
 
             nouvelleCarte.className = "carte";
 
             nouvelleCarte.innerHTML = `
-                <img src="${image}" alt="${nom}">
-                <h3>${nom}</h3>
-                <p class="info">🔢 Numéro : ${numero || "Non renseigné"}</p>
-                <p class="info">🌍 Langue : ${langue}</p>
-                <p class="info">⭐ État : ${etat}</p>
-                <p class="info">📦 Quantité : ${quantite}</p>
-                <p class="prix">💰 ${prix ? prix + " CHF" : "Prix non renseigné"}</p>
+                <img src="${carte.image}" alt="${carte.nom}">
+                <h3>${carte.nom}</h3>
+
+                <p class="info">
+                    🔢 Numéro : ${carte.numero || "Non renseigné"}
+                </p>
+
+                <p class="info">
+                    🌍 Langue : ${carte.langue}
+                </p>
+
+                <p class="info">
+                    ⭐ État : ${carte.etat}
+                </p>
+
+                <p class="info">
+                    📦 Quantité : ${carte.quantite}
+                </p>
+
+                <p class="prix">
+                    💰 ${carte.prix ? carte.prix + " CHF" : "Prix non renseigné"}
+                </p>
+
+                <button class="supprimer" onclick="supprimerCarte(${index})">
+                    🗑️ Supprimer
+                </button>
             `;
 
-            document.getElementById("cartes").appendChild(nouvelleCarte);
+            zoneCartes.appendChild(nouvelleCarte);
+        });
+    }
 
-            message.textContent = "✅ Carte ajoutée au Pokédex !";
 
-            document.getElementById("nom").value = "";
-            document.getElementById("numero").value = "";
-            document.getElementById("quantite").value = "1";
-            document.getElementById("prix").value = "";
-            document.getElementById("image").value = "";
+    function ajouterCarte() {
+
+        const nom = document.getElementById("nom").value.trim();
+        const numero = document.getElementById("numero").value.trim();
+        const langue = document.getElementById("langue").value;
+        const etat = document.getElementById("etat").value;
+        const quantite = document.getElementById("quantite").value;
+        const prix = document.getElementById("prix").value;
+        const image = document.getElementById("image").value.trim();
+
+        const message = document.getElementById("message");
+
+        if (nom === "") {
+            message.textContent = "⚠️ Indique le nom de la carte.";
+            return;
         }
 
-
-        function chercherCarte() {
-
-            const recherche = document
-                .getElementById("recherche")
-                .value
-                .toLowerCase();
-
-            const cartes = document.querySelectorAll(".carte");
-
-            cartes.forEach(function(carte) {
-
-                const texte = carte.textContent.toLowerCase();
-
-                if (texte.includes(recherche)) {
-                    carte.style.display = "block";
-                } else {
-                    carte.style.display = "none";
-                }
-
-            });
+        if (image === "") {
+            message.textContent = "⚠️ Ajoute l'URL d'une image.";
+            return;
         }
 
-    </script>
+        const nouvelleCarte = {
+            nom: nom,
+            numero: numero,
+            langue: langue,
+            etat: etat,
+            quantite: quantite,
+            prix: prix,
+            image: image
+        };
+
+        cartes.push(nouvelleCarte);
+
+        sauvegarderCartes();
+
+        afficherCartes();
+
+        message.textContent = "✅ Carte enregistrée !";
+
+        document.getElementById("nom").value = "";
+        document.getElementById("numero").value = "";
+        document.getElementById("quantite").value = "1";
+        document.getElementById("prix").value = "";
+        document.getElementById("image").value = "";
+    }
+
+
+    function supprimerCarte(index) {
+
+        cartes.splice(index, 1);
+
+        sauvegarderCartes();
+
+        afficherCartes();
+    }
+
+
+    function chercherCarte() {
+
+        const recherche = document
+            .getElementById("recherche")
+            .value
+            .toLowerCase();
+
+        const cartesAffichees = document.querySelectorAll(".carte");
+
+        cartesAffichees.forEach(function(carte) {
+
+            const texte = carte.textContent.toLowerCase();
+
+            if (texte.includes(recherche)) {
+                carte.style.display = "block";
+            } else {
+                carte.style.display = "none";
+            }
+
+        });
+    }
+
+
+    /*
+     * Affiche les cartes sauvegardées au chargement de la page.
+     */
+
+    afficherCartes();
+
+</script>
 
 </body>
 </html>
